@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf www/ || true",
     "build": "npm run clean && tsc --build tsconfig.json && copy package.json www\\package.json && mkdir www\\tmp\\ && cd www && zip -r Archive.zip . && cd ..",
-    "dev": "node ./project-starter-code/src/server.js"
+    "dev": "node ./src/server.js"
   },
   "repository": {
     "type": "git",

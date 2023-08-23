@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
-(async () => {
+
 
   // Init the Express application
   const app = express();
@@ -27,30 +27,26 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
-  /**************************************************************************** */
-  app.get( "/filteredimage", async ( req :express.Request, res :express.Response) => {
-    let image_url :string = req.query.image_url;
-
-    if (!image_url)
-    {
-      res
-        .status(404)
-          .send("Please send the correct image_url");
+    /**************************************************************************** */
+  app.get("/filteredimage", async (req, res) => {
+    let image_url = req.query.image_url
+  
+    if (!image_url) {
+      res.status(404).send("Please send the correct image_url")
     }
-      
-    filterImageFromURL(image_url)
-        .then((response) => {
-          res.sendFile(response);
-          res.on('finish', function() {
-          deleteLocalFiles([response]);
-        });
-    });
-  });
+  
+    filterImageFromURL(image_url).then(response => {
+      res.sendFile(response)
+      res.on("finish", function() {
+        deleteLocalFiles([response])
+      })
+    })
+  })
   //! END @TODO1
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async (req, res) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
@@ -60,4 +56,3 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       console.log( `server running http://localhost:${ port }` );
       console.log( `press CTRL+C to stop server` );
   } );
-})();
